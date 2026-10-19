@@ -1,0 +1,81 @@
+/* =========================================================
+   MOTOCLUBE
+   Cards
+   ========================================================= */
+
+.card {
+    position: relative;
+
+    width: 100%;
+
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            transparent 40%
+        ),
+        var(--surface-secondary);
+
+    box-shadow: var(--shadow-small);
+
+    overflow: hidden;
+}
+
+.card--interactive {
+    cursor: pointer;
+
+    transition:
+        transform var(--duration-fast) var(--ease-standard),
+        border-color var(--duration-fast) var(--ease-standard),
+        background var(--duration-fast) var(--ease-standard);
+}
+
+.card--interactive:active {
+    transform: scale(0.985);
+}
+
+.card--interactive:hover {
+    border-color: var(--border-default);
+}
+
+.card__body {
+    padding: var(--space-5);
+}
+
+.card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-3);
+
+    padding: var(--space-4);
+}
+
+.card__footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+
+    padding: var(--space-4);
+
+    border-top: 1px solid var(--border-subtle);
+}
+
+.card__title {
+    color: var(--text-primary);
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.card__subtitle {
+    margin-top: 3px;
+
+    color: var(--text-muted);
+
+    font-size: 12px;
+}

@@ -1,0 +1,426 @@
+/* =========================================================
+   MOTOCLUBE — Factory / Industrial Modal
+   ========================================================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: max(18px, env(safe-area-inset-top)) 18px max(18px, env(safe-area-inset-bottom));
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 220ms ease;
+}
+
+.modal.is-visible { opacity: 1; pointer-events: auto; }
+
+.modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(7, 8, 8, .72);
+    backdrop-filter: blur(9px) saturate(.82);
+    -webkit-backdrop-filter: blur(9px) saturate(.82);
+}
+
+.modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 520px);
+    max-height: min(84dvh, 760px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(196, 177, 139, .20);
+    border-bottom: 1px solid rgba(196, 177, 139, .20);
+    border-radius: 28px;
+    background:
+        linear-gradient(145deg, rgba(104, 91, 68, .12), transparent 34%),
+        linear-gradient(180deg, #252522 0%, #171817 52%, #101110 100%);
+    box-shadow: 0 -18px 60px rgba(0,0,0,.58), inset 0 1px 0 rgba(235,220,188,.06);
+    transform: translateY(16px) scale(.965);
+    transition: transform 320ms cubic-bezier(.16,1,.3,1);
+}
+
+.modal.is-visible .modal__dialog { transform: translateY(0) scale(1); }
+
+.modal__header {
+    flex: 0 0 auto;
+    min-height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px 10px 20px;
+    border-bottom: 1px solid rgba(196,177,139,.12);
+    background: linear-gradient(180deg, rgba(63,57,45,.28), rgba(25,26,24,.08));
+}
+
+.modal__header::before {
+    display: none;
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    width: 38px;
+    height: 4px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+    background: rgba(212,197,164,.24);
+}
+
+.modal__title {
+    margin: 5px 0 0;
+    color: #e6dfd0;
+    font-size: 17px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -.02em;
+}
+
+.modal__close {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(196,177,139,.16);
+    border-radius: 50%;
+    color: #aaa18f;
+    background: rgba(255,255,255,.035);
+}
+
+.modal__close:active { transform: scale(.92); }
+.modal__close svg { width: 18px; height: 18px; }
+
+.modal__body {
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: 20px 20px calc(22px + env(safe-area-inset-bottom));
+    scrollbar-width: thin;
+}
+
+/* Modais flutuantes: conteúdo nunca encosta na borda do diálogo. */
+.modal__body > * {
+    min-width: 0;
+}
+
+.modal-create-host { min-height: 0; }
+.modal-create-error { padding: 28px 20px; color: #b8b0a0; text-align: center; }
+
+/* Formulários antigos passam a viver dentro do modal. */
+.modal__body .event-form-view,
+.modal__body .product-form-view,
+.modal__body .post-create-view,
+.modal__body .sos-create-view {
+    min-height: auto;
+    margin: -20px -20px calc(-22px - env(safe-area-inset-bottom));
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+.modal__body .event-form-view__header,
+.modal__body .product-form-view__header,
+.modal__body .sos-create-view__header {
+    display: none;
+}
+
+.modal__body .post-create-view__header {
+    padding-top: 10px;
+}
+
+.modal--create-sos .modal__dialog {
+    border-color: rgba(184, 130, 57, .28);
+}
+
+@media (min-width: 700px) {
+    .modal { padding: 24px; }
+    .modal__dialog { max-height: 86dvh; }
+}
+
+/* =========================================================
+   CONFIRMAÇÕES — floating premium
+   ========================================================= */
+.modal--vehicle-confirm .modal__dialog {
+    width: min(100%, 430px);
+    background:
+        radial-gradient(circle at 50% -10%, rgba(192,160,106,.13), transparent 44%),
+        linear-gradient(155deg, rgba(255,255,255,.045), rgba(8,9,8,.96) 58%);
+}
+
+.modal--vehicle-confirm .modal__header {
+    min-height: 54px;
+    border-bottom-color: rgba(255,255,255,.055);
+}
+
+.vehicle-confirm {
+    padding: 20px 20px 22px;
+    text-align: center;
+}
+
+.vehicle-confirm__icon {
+    width: 74px;
+    height: 74px;
+    margin: 2px auto 16px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(192,160,106,.24);
+    border-radius: 22px;
+    color: var(--brand-brass, #c0a06a);
+    background: radial-gradient(circle at 50% 35%, rgba(192,160,106,.14), rgba(192,160,106,.035));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 14px 30px rgba(0,0,0,.25);
+}
+
+.vehicle-confirm__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.vehicle-confirm__copy strong {
+    color: var(--text-primary, #f4f4f2);
+    font-size: 18px;
+    line-height: 1.22;
+}
+
+.vehicle-confirm__copy span {
+    color: var(--text-tertiary, #8f918c);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.vehicle-confirm__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+    margin-top: 20px;
+}
+
+.modal--danger-confirm .modal__dialog {
+    width: min(100%, 430px);
+}
+
+
+.vehicle-edit-static-field {
+    min-height: 47px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 13px;
+    border: 1px solid rgba(255,255,255,.075);
+    border-radius: 13px;
+    color: var(--text-primary, #f4f4f2);
+    background: rgba(255,255,255,.035);
+}
+
+.vehicle-edit-static-field [data-icon] {
+    color: var(--brand-brass, #c0a06a);
+}
+
+
+/* =========================================================
+   CONFIRMATION MODALS — breathing room / premium rhythm
+   ========================================================= */
+.modal__body > .delete-vehicle-dialog,
+.modal__body > .confirm-dialog {
+    padding: 0;
+}
+
+.delete-vehicle-dialog,
+.confirm-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--text-secondary, #b5b6b1);
+    font-size: .88rem;
+    line-height: 1.55;
+}
+
+.delete-vehicle-dialog p,
+.confirm-dialog p {
+    margin: 0;
+}
+
+.delete-vehicle-dialog strong,
+.confirm-dialog strong {
+    color: var(--text-primary, #f4f4f2);
+}
+
+.delete-vehicle-dialog__actions,
+.confirm-dialog__actions {
+    margin-top: 7px;
+}
+
+.delete-vehicle-dialog__actions .button,
+.confirm-dialog__actions .button {
+    border-radius: 15px;
+}
+
+.delete-vehicle-events {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 3px;
+}
+
+.delete-vehicle-event {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.055);
+    border-radius: 15px;
+    background: rgba(255,255,255,.025);
+}
+
+.delete-vehicle-event strong {
+    font-size: .80rem;
+}
+
+/* =========================================================
+   CONFIRMATION ACTIONS — touch friendly / no overflow
+   ========================================================= */
+.modal__body > .vehicle-confirm,
+.modal__body > .delete-vehicle-dialog,
+.modal__body > .confirm-dialog {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.vehicle-confirm__actions,
+.delete-vehicle-dialog__actions,
+.confirm-dialog__actions,
+.post-edit-form__actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.vehicle-confirm__actions .button,
+.delete-vehicle-dialog__actions .button,
+.confirm-dialog__actions .button,
+.post-edit-form__actions .button {
+    width: 100%;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 360px) {
+    .vehicle-confirm__actions,
+    .delete-vehicle-dialog__actions,
+    .confirm-dialog__actions,
+    .post-edit-form__actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+.modal--vehicle-confirm .modal__body {
+    padding: 0;
+}
+
+.modal--vehicle-confirm .modal__header {
+    padding-left: 20px;
+    padding-right: 12px;
+}
+
+.modal--vehicle-confirm .modal__close {
+    margin-left: auto;
+}
+
+.post-edit-modal .modal__dialog {
+    width: min(100%, 500px);
+    border-color: rgba(192,160,106,.20);
+}
+
+.post-edit-modal .modal__body {
+    padding: 0;
+}
+
+.post-edit-modal .post-edit-form {
+    padding: 18px 18px calc(18px + env(safe-area-inset-bottom));
+}
+
+.post-edit-modal .post-edit-form textarea {
+    min-height: 150px;
+    border-radius: 18px;
+    border-color: rgba(192,160,106,.16);
+    background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(0,0,0,.20));
+    font: inherit;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.post-edit-modal .post-edit-form textarea:focus {
+    border-color: rgba(192,160,106,.42);
+    box-shadow: 0 0 0 3px rgba(192,160,106,.07);
+}
+
+.post-edit-modal .post-edit-form__actions {
+    margin-top: 2px;
+}
+
+/* =========================================================
+   POST EDIT — premium editor polish
+   ========================================================= */
+.post-edit-modal .modal__title {
+    letter-spacing: -.025em;
+}
+
+.post-edit-modal .post-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post-edit-modal .post-edit-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    overflow-y: auto;
+}
+
+.post-edit-modal .post-edit-form__actions {
+    display: grid;
+    grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+    gap: 9px;
+}
+
+.post-edit-modal .post-edit-form__actions .button {
+    min-height: 48px;
+    border-radius: 15px;
+}
+
+
+/* Floating modal rhythm — consistent breathing room for text and actions. */
+.modal__body > .post-comment-actions,
+.modal__body > .confirm-dialog,
+.modal__body > .delete-vehicle-dialog {
+    padding: 0;
+}
+
+.modal__body > .post-comment-actions {
+    gap: 10px;
+}
+
+@media (max-width: 420px) {
+    .modal__body {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .modal__body .event-form-view,
+    .modal__body .product-form-view,
+    .modal__body .post-create-view,
+    .modal__body .sos-create-view {
+        margin-left: -18px;
+        margin-right: -18px;
+    }
+}

@@ -1,0 +1,106 @@
+/* =========================================================
+   CÓDIGO DE HONRA — Global Toast
+   Greaser / dark oil / bottom-sheet inspired
+   ========================================================= */
+
+.toast-root {
+    position: fixed;
+    top: calc(10px + env(safe-area-inset-top, 0px));
+    left: 50%;
+    z-index: 2147483647;
+    width: min(calc(100% - 24px), 460px);
+    transform: translateX(-50%);
+    pointer-events: none;
+    isolation: isolate;
+}
+
+.toast {
+    --oil-rgb: 92, 67, 39;
+    --edge-rgb: 125, 108, 82;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 54px;
+    padding: 10px 14px 11px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.105);
+    border-radius: 12px;
+    background:
+        radial-gradient(ellipse 72% 118% at 88% 18%, rgba(var(--oil-rgb), .40) 0%, rgba(var(--oil-rgb), .22) 20%, rgba(var(--oil-rgb), .08) 43%, transparent 70%),
+        radial-gradient(ellipse 66% 98% at 12% 82%, rgba(var(--oil-rgb), .31) 0%, rgba(var(--oil-rgb), .16) 24%, rgba(var(--oil-rgb), .055) 47%, transparent 74%),
+        radial-gradient(ellipse 52% 70% at 54% 112%, rgba(var(--oil-rgb), .18), transparent 70%),
+        rgba(5, 5, 5, .72);
+    -webkit-backdrop-filter: blur(24px) saturate(118%);
+    backdrop-filter: blur(24px) saturate(118%);
+    box-shadow:
+        0 14px 36px rgba(0,0,0,.48),
+        0 3px 9px rgba(0,0,0,.34),
+        inset 0 1px 0 rgba(255,255,255,.055),
+        inset 0 -1px 0 rgba(0,0,0,.42);
+    color: #e9e5dc;
+    font-size: 13px;
+    font-weight: 650;
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 180ms ease, transform 240ms cubic-bezier(.16,1,.3,1);
+}
+
+.toast::before {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 27% 21% at 22% 38%, rgba(var(--oil-rgb), .25), transparent 72%),
+        radial-gradient(ellipse 31% 25% at 78% 67%, rgba(var(--oil-rgb), .22), transparent 74%),
+        radial-gradient(ellipse 21% 32% at 58% 18%, rgba(255,255,255,.022), transparent 76%),
+        radial-gradient(ellipse 19% 17% at 47% 74%, rgba(var(--oil-rgb), .15), transparent 72%);
+    filter: blur(20px);
+    opacity: .98;
+    transform: rotate(-7deg);
+}
+
+.toast::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgba(var(--edge-rgb), .07);
+}
+
+.toast.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast--success { --oil-rgb: 43, 92, 48; --edge-rgb: 74, 116, 73; }
+.toast--warning { --oil-rgb: 112, 68, 25; --edge-rgb: 133, 91, 44; }
+.toast--error { --oil-rgb: 104, 37, 39; --edge-rgb: 132, 61, 61; }
+.toast--info,
+.toast--default { --oil-rgb: 92, 64, 34; --edge-rgb: 112, 88, 61; }
+
+.toast-root > .toast + .toast { margin-top: 9px; }
+
+.toast__icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 7px;
+    background: rgba(0,0,0,.24);
+    color: #d8d1c4;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.toast__icon svg { display: block; width: 17px; height: 17px; }
+.toast__content { position: relative; z-index: 1; min-width: 0; flex: 1 1 auto; }
+.toast__title { display: block; margin-bottom: 2px; color: #f0ece4; font-size: 12px; font-weight: 800; letter-spacing: .055em; text-transform: uppercase; }
+.toast__message { display: block; line-height: 1.35; color: rgba(235,231,223,.88); overflow-wrap: anywhere; }
+
+@media (prefers-reduced-motion: reduce) { .toast { transition: opacity 120ms ease; } }

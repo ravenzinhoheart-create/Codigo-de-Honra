@@ -1,0 +1,392 @@
+/* =========================================================
+   CODIGO DE HONRA
+   Bottom Navigation — Native / Premium
+   ========================================================= */
+
+.app-navbar {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    z-index: var(--z-navbar);
+    width: min(100%, var(--content-max-width));
+    padding: 8px max(10px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+    transform: translate(-50%, 110%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 260ms cubic-bezier(.22,1,.36,1), opacity 180ms ease, visibility 180ms ease;
+    pointer-events: none;
+}
+
+.app-navbar.is-visible {
+    transform: translate(-50%, 0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.app-navbar__inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: end;
+    width: 100%;
+    min-height: 68px;
+    padding: 7px 5px 5px;
+    background:
+        linear-gradient(180deg, rgba(42,44,47,.97), rgba(12,13,15,.99)),
+        repeating-linear-gradient(105deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px);
+    border: 1px solid rgba(196,199,202,.22);
+    border-radius: 24px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.045);
+    backdrop-filter: blur(22px) saturate(80%);
+    -webkit-backdrop-filter: blur(22px) saturate(130%);
+    overflow: visible;
+}
+
+.app-navbar__item {
+    position: relative;
+    min-width: 0;
+    min-height: 54px;
+    padding: 4px 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #87847b;
+    border-radius: 15px;
+    background: transparent;
+    border: 0;
+    transition: color 150ms ease, background 150ms ease, transform 140ms cubic-bezier(.22,1,.36,1);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-navbar__item:active { transform: scale(.94); }
+.app-navbar__item.is-active { color: #e6dfd0; }
+
+.app-navbar__item.is-active::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    width: 22px;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #b7a982, #e5ddca, #746d5d);
+    box-shadow: 0 0 12px rgba(210,214,218,.20);
+}
+
+.app-navbar__icon {
+    width: 24px;
+    height: 24px;
+    display: grid;
+    place-items: center;
+}
+
+.app-navbar__icon svg { width: 23px; height: 23px; }
+
+.app-navbar__label {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: -.01em;
+}
+
+/* O espaço central existe na grid, mas não participa da animação. */
+.app-navbar__add-slot {
+    min-width: 0;
+    min-height: 54px;
+    pointer-events: none;
+}
+
+/* =========================================================
+   CENTRAL ADD — ELEMENTO INDEPENDENTE
+
+   O + NÃO é um item da grid.
+   Ele fica absolutamente ancorado no centro do slot.
+
+   Fechado: 54px circular.
+   Aberto: sobe e, no próprio centro, expande para os dois lados.
+   ========================================================= */
+
+.app-navbar__add {
+    --add-size: 54px;
+    --add-pill-width: min(344px, calc(100vw - 28px));
+
+    position: absolute;
+    left: 50%;
+    bottom: 5px;
+    z-index: 30;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--add-size);
+    height: var(--add-size);
+    min-width: var(--add-size);
+    min-height: var(--add-size);
+    padding: 0;
+    margin: 0;
+
+    cursor: pointer;
+    color: #fff;
+    outline: none;
+    overflow: visible;
+
+    transform: translateX(-50%);
+    transform-origin: 50% 50%;
+
+    background:
+        radial-gradient(circle at 34% 24%, rgba(255,255,255,.24), transparent 24%),
+        linear-gradient(145deg, #8a806d 0%, #4b4b45 38%, #1b1c19 100%);
+    border: 1px solid rgba(226,229,231,.42);
+    border-radius: 50%;
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.58),
+        0 0 0 5px rgba(9,10,11,.96),
+        inset 0 1px 0 rgba(255,255,255,.28),
+        inset 0 -8px 16px rgba(0,0,0,.22);
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-navbar__add.is-open {
+    animation: add-open 430ms cubic-bezier(.16,1,.3,1) both;
+}
+
+.app-navbar__add.is-closing {
+    animation: add-close 360ms cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes add-open {
+    0% {
+        width: var(--add-size);
+        height: var(--add-size);
+        border-radius: 50%;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    38% {
+        width: var(--add-size);
+        height: 56px;
+        border-radius: 50%;
+        transform: translateX(-50%) translateY(-72px);
+    }
+
+    100% {
+        width: var(--add-pill-width);
+        height: 56px;
+        border-radius: 999px;
+        transform: translateX(-50%) translateY(-72px) scaleX(1);
+    }
+}
+
+@keyframes add-close {
+    0% {
+        width: var(--add-pill-width);
+        height: 56px;
+        border-radius: 999px;
+        transform: translateX(-50%) translateY(-72px);
+    }
+
+    58% {
+        width: var(--add-size);
+        height: 56px;
+        border-radius: 50%;
+        transform: translateX(-50%) translateY(-72px);
+    }
+
+    100% {
+        width: var(--add-size);
+        height: var(--add-size);
+        border-radius: 50%;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Mantém o + no MESMO elemento durante o deslocamento e a expansão. */
+.app-navbar__add > .app-navbar__icon {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+    opacity: 1;
+    transform: scale(1);
+    transition:
+        opacity 180ms ease,
+        transform 260ms cubic-bezier(.16,1,.3,1);
+    z-index: 4;
+}
+
+.app-navbar__add > .app-navbar__icon svg {
+    width: 25px;
+    height: 25px;
+}
+
+.app-navbar__add.is-open > .app-navbar__icon {
+    opacity: 0;
+    transform: scale(.72);
+    transition-delay: 400ms;
+}
+
+.app-navbar__add.is-closing > .app-navbar__icon {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: 210ms;
+}
+
+.app-navbar__add > .app-navbar__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* =========================================================
+   CONTEÚDO DA PILL
+   Só aparece depois de o próprio + terminar o morph.
+   ========================================================= */
+
+.navbar-add-menu {
+    position: absolute;
+    inset: 0;
+    z-index: 31;
+
+    width: 100%;
+    height: 100%;
+    transform: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2px;
+
+    padding: 4px;
+
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.navbar-add-menu.is-open {
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.navbar-add-menu__item,
+.navbar-add-menu__close {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: #aaa18f;
+    opacity: 0;
+    transform: translateY(7px) scale(.82);
+    transition:
+        opacity 220ms ease,
+        transform 440ms cubic-bezier(.16,1,.3,1),
+        background 140ms ease,
+        color 140ms ease;
+}
+
+.navbar-add-menu.is-open .navbar-add-menu__item,
+.navbar-add-menu.is-open .navbar-add-menu__close {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* A pill termina em ~560ms; os comandos entram logo após o morph. */
+.navbar-add-menu.is-open .navbar-add-menu__item:nth-child(1) { transition-delay: 285ms; }
+.navbar-add-menu.is-open .navbar-add-menu__item:nth-child(2) { transition-delay: 300ms; }
+.navbar-add-menu.is-open .navbar-add-menu__item:nth-child(3) { transition-delay: 315ms; }
+.navbar-add-menu.is-open .navbar-add-menu__item:nth-child(4) { transition-delay: 330ms; }
+.navbar-add-menu.is-open .navbar-add-menu__close { transition-delay: 345ms; }
+
+.navbar-add-menu__item:active,
+.navbar-add-menu__close:active { transform: scale(.92); }
+
+.navbar-add-menu__item:hover,
+.navbar-add-menu__close:hover {
+    background: rgba(255,255,255,.055);
+    color: #e6dfd0;
+}
+
+.navbar-add-menu__item--sos {
+    color: #b56b48;
+    background: rgba(154, 79, 50, .08);
+    box-shadow: inset 0 0 0 1px rgba(154, 79, 50, .12);
+}
+
+.navbar-add-menu__item--sos:hover {
+    color: #cf8058;
+    background: rgba(154, 79, 50, .15);
+    box-shadow:
+        inset 0 0 0 1px rgba(181, 107, 72, .20),
+        0 0 18px rgba(154, 79, 50, .12);
+}
+
+.navbar-add-menu__item--sos .navbar-add-menu__icon {
+    filter: drop-shadow(0 0 7px rgba(210, 32, 42, .22));
+}
+
+.navbar-add-menu__icon,
+.navbar-add-menu__close [data-icon] {
+    width: 23px;
+    height: 23px;
+    display: grid;
+    place-items: center;
+}
+
+.navbar-add-menu__icon svg,
+.navbar-add-menu__close svg { width: 21px; height: 21px; }
+
+.navbar-add-menu__item > span:last-child {
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.navbar-add-menu__close {
+    flex: 0 0 42px;
+    width: 42px;
+    min-width: 42px;
+    height: 42px;
+    color: #837b6b;
+}
+
+@media (max-width: 370px) {
+    .app-navbar {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .app-navbar__inner { border-radius: 21px; }
+    .app-navbar__label { font-size: 9px; }
+    .app-navbar__add { --add-pill-width: calc(100vw - 20px); }
+    .navbar-add-menu__item > span:last-child { font-size: 7px; }
+}

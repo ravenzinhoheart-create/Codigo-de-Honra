@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0b0b0b"
+    >
+
+    <meta
+        name="mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="Motoclube"
+    >
+
+    <meta
+        name="description"
+        content="Aplicativo interno do Motoclube"
+    >
+
+    <title>Código de Honra</title>
+
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./assets/icons/app/apple-touch-icon.png">
+
+    <meta name="apple-mobile-web-app-title" content="Código de Honra">
+
+    <link rel="stylesheet" href="./css/core/reset.css">
+    <link rel="stylesheet" href="./css/core/variables.css">
+    <link rel="stylesheet" href="./css/core/typography.css">
+    <link rel="stylesheet" href="./css/core/layout.css">
+    <link rel="stylesheet" href="./css/core/animations.css">
+
+    <link rel="stylesheet" href="./css/components/buttons.css">
+    <link rel="stylesheet" href="./css/components/cards.css">
+    <link rel="stylesheet" href="./css/components/modal.css">
+    <link rel="stylesheet" href="./css/components/toast.css">
+    <link rel="stylesheet" href="./css/components/bottom-sheet.css">
+    <link rel="stylesheet" href="./css/components/avatar.css">
+    <link rel="stylesheet" href="./css/components/status-ring.css">
+    <link rel="stylesheet" href="./css/components/navbar.css">
+    <link rel="stylesheet" href="./css/components/dropdown.css">
+    <link rel="stylesheet" href="./css/components/media.css">
+    <link rel="stylesheet" href="./css/components/auth.css">
+
+    <link rel="stylesheet" href="./css/app.css">
+
+    <!-- View-specific styles -->
+    <link rel="stylesheet" href="./css/components/home.css">
+    <link rel="stylesheet" href="./css/components/profile.css">
+    <link rel="stylesheet" href="./css/components/marketplace.css">
+    <link rel="stylesheet" href="./css/components/club.css">
+    <link rel="stylesheet" href="./css/components/ride.css">
+    <link rel="stylesheet" href="./css/components/garage.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         APP ROOT
+         ========================================================= -->
+
+    <div id="app">
+
+        <!-- =====================================================
+             SPLASH / BOOT
+             ===================================================== -->
+
+        <div
+            id="app-splash"
+            class="app-splash"
+            aria-hidden="true"
+        >
+            <div class="app-splash__content">
+                <div
+                    id="app-splash-logo"
+                    class="app-splash__logo"
+                ></div>
+
+                <div
+                    id="app-splash-loader"
+                    class="app-splash__loader"
+                ></div>
+            </div>
+        </div>
+
+
+        <!-- =====================================================
+             MAIN APPLICATION
+             ===================================================== -->
+
+        <main
+            id="app-main"
+            class="app-main"
+        >
+
+            <!--
+                TODA VIEW DO APLICATIVO SERÁ INJETADA AQUI.
+
+                Exemplos:
+
+                /login
+                /register
+                /home
+                /club
+                /events
+                /marketplace
+                /profile
+                /sos
+            -->
+
+            <div
+                id="app-view"
+                class="app-view"
+            ></div>
+
+        </main>
+
+
+        <!-- =====================================================
+             GLOBAL UI LAYERS
+             ===================================================== -->
+
+        <div
+            id="app-overlay"
+            class="app-overlay"
+            aria-hidden="true"
+        ></div>
+
+        <div
+            id="modal-root"
+            class="modal-root"
+        ></div>
+
+        <div
+            id="bottom-sheet-root"
+            class="bottom-sheet-root"
+        ></div>
+
+        <div
+            id="toast-root"
+            class="toast-root"
+            aria-live="polite"
+            aria-atomic="true"
+        ></div>
+
+
+        <!-- =====================================================
+             BOTTOM NAVIGATION
+             ===================================================== -->
+
+        <nav
+            id="app-navbar"
+            class="app-navbar"
+            aria-label="Navegação principal"
+            hidden
+        >
+
+            <div class="app-navbar__inner">
+
+                <button
+                    type="button"
+                    class="app-navbar__item"
+                    data-route="home"
+                    aria-label="Início"
+                >
+                    <span
+                        class="app-navbar__icon"
+                        data-icon="home"
+                    ></span>
+
+                    <span class="app-navbar__label">
+                        Início
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="app-navbar__item"
+                    data-route="club"
+                    aria-label="Clube"
+                >
+                    <span
+                        class="app-navbar__icon"
+                        data-icon="club"
+                    ></span>
+
+                    <span class="app-navbar__label">
+                        Clube
+                    </span>
+                </button>
+
+
+                <!-- Slot central: reserva a posição do FAB sem fazer o FAB
+                     participar do fluxo da grade. -->
+                <div
+                    class="app-navbar__add-slot"
+                    aria-hidden="true"
+                ></div>
+
+
+                <!-- FAB independente da grade. O mesmo elemento sobe e
+                     se transforma na pill, expandindo para os dois lados. -->
+                <div
+                    id="navbar-add"
+                    class="app-navbar__add"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Adicionar"
+                    aria-expanded="false"
+                >
+                    <span
+                        class="app-navbar__icon"
+                        data-icon="plus"
+                    ></span>
+
+                    <span class="app-navbar__label">
+                        Adicionar
+                    </span>
+
+                    <div
+                        id="navbar-add-menu"
+                        class="navbar-add-menu"
+                        aria-hidden="true"
+                    >
+                        <button
+                            type="button"
+                            class="navbar-add-menu__item"
+                            data-action="create-post"
+                        >
+                            <span class="navbar-add-menu__icon" data-icon="post"></span>
+                            <span>Postagem</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="navbar-add-menu__item"
+                            data-action="create-event"
+                        >
+                            <span class="navbar-add-menu__icon" data-icon="event"></span>
+                            <span>Evento</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="navbar-add-menu__item"
+                            data-action="create-marketplace"
+                        >
+                            <span class="navbar-add-menu__icon" data-icon="marketplace"></span>
+                            <span>Anúncio</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            class="navbar-add-menu__item navbar-add-menu__item--sos"
+                            data-action="sos"
+                        >
+                            <span class="navbar-add-menu__icon" data-icon="sos"></span>
+                            <span>SOS</span>
+                        </button>
+
+                        <button
+                            type="button"
+                            id="navbar-add-close"
+                            class="navbar-add-menu__close"
+                            aria-label="Fechar menu de adicionar"
+                        >
+                            <span data-icon="close"></span>
+                        </button>
+                    </div>
+                </div>
+
+
+                <button
+                    type="button"
+                    class="app-navbar__item"
+                    data-route="marketplace"
+                    aria-label="Marketplace"
+                >
+                    <span
+                        class="app-navbar__icon"
+                        data-icon="marketplace"
+                    ></span>
+
+                    <span class="app-navbar__label">
+                        Mercado
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="app-navbar__item"
+                    data-route="profile"
+                    aria-label="Perfil"
+                >
+                    <span
+                        class="app-navbar__icon"
+                        data-icon="profile"
+                    ></span>
+
+                    <span class="app-navbar__label">
+                        Perfil
+                    </span>
+                </button>
+
+            </div>
+
+
+        </nav>
+
+    </div>
+
+
+    <!--
+        =========================================================
+        JAVASCRIPT
+        =========================================================
+
+        type="module" nos permite usar:
+
+            import ...
+            export ...
+
+        sem precisar transformar o projeto em um bundle
+        logo de início.
+
+        Posteriormente podemos empacotar tudo para Android/iOS.
+    -->
+
+    <script type="module" src="./js/native/android-bridge.js"></script>
+
+    <script
+        type="module"
+        src="./js/index.js"
+    ></script>
+
+</body>
+</html>

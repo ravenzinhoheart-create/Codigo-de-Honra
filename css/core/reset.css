@@ -1,0 +1,102 @@
+/* =========================================================
+   MOTOCLUBE
+   Global Reset
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+    background: #08090b;
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    min-width: 320px;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin: 0;
+    padding: 0;
+
+    background: #08090b;
+    color: #f2f2f3;
+
+    overflow-x: hidden;
+
+    /* Impede o pull-to-refresh do navegador ao puxar a tela para baixo.
+       Os elementos internos com rolagem continuam rolando normalmente. */
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: none;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    border: 0;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+input,
+textarea,
+select {
+    color: inherit;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* MotoClube — color-neutral external SVGs */
+.mc-icon .mc-fill { fill: currentColor !important; }
+.mc-icon .mc-stroke { stroke: currentColor !important; }

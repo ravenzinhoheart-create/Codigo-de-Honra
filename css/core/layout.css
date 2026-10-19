@@ -1,0 +1,145 @@
+/* =========================================================
+   MOTOCLUBE
+   Global Layout
+   ========================================================= */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background: #08090b;
+}
+
+#app {
+    position: relative;
+
+    width: 100%;
+    min-width: 320px;
+    max-width: var(--content-max-width);
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(179, 18, 36, 0.10),
+            transparent 42%
+        ),
+        var(--bg-app);
+
+    overflow-x: hidden;
+}
+
+#app-content {
+    position: relative;
+    z-index: var(--z-content);
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    padding:
+        calc(16px + var(--safe-top))
+        var(--page-padding)
+        calc(
+            var(--navbar-height)
+            + 24px
+            + var(--safe-bottom)
+        );
+}
+
+
+/* ---------------------------------------------------------
+   Página
+   --------------------------------------------------------- */
+
+.app-page {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+
+    width: 100%;
+
+    padding:
+        calc(12px + var(--safe-top))
+        var(--page-padding)
+        12px;
+
+    background: rgba(8, 9, 11, 0.88);
+
+    border-bottom: 1px solid var(--border-subtle);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+/* ---------------------------------------------------------
+   Section
+   --------------------------------------------------------- */
+
+.app-section {
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+.app-section-title {
+    margin-bottom: 12px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+
+/* ---------------------------------------------------------
+   Desktop
+   --------------------------------------------------------- */
+
+@media (min-width: 721px) {
+
+    body {
+        background: #050506;
+    }
+
+    #app {
+        box-shadow:
+            0 0 0 1px rgba(255,255,255,0.04),
+            0 0 80px rgba(0,0,0,0.50);
+    }
+}
+
+
+/* ---------------------------------------------------------
+   Small phones
+   --------------------------------------------------------- */
+
+@media (max-width: 360px) {
+
+    :root {
+        --page-padding: 14px;
+    }
+
+    #app-content {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}

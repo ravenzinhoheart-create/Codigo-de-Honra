@@ -1,0 +1,69 @@
+/* =========================================================
+   MOTOCLUBE
+   Status Ring
+   ========================================================= */
+
+.status-ring {
+    position: relative;
+
+    display: inline-flex;
+
+    padding: 3px;
+
+    border-radius: 50%;
+
+    background: var(--status-off);
+}
+
+.status-ring--off {
+    background: var(--status-off);
+}
+
+.status-ring--on {
+    background: var(--status-on);
+}
+
+.status-ring--ride {
+    background: var(--status-ride);
+}
+
+.status-ring--sos {
+    background: var(--status-sos);
+}
+
+.status-ring--sos {
+    animation:
+        mc-status-pulse
+        1.6s
+        ease-in-out
+        infinite;
+}
+
+.status-ring .avatar {
+    border-color: var(--surface-page);
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--status-off);
+}
+
+.status-dot--off {
+    background: var(--status-off);
+}
+
+.status-dot--on {
+    background: var(--status-on);
+}
+
+.status-dot--ride {
+    background: var(--status-ride);
+}
+
+.status-dot--sos {
+    background: var(--status-sos);
+}

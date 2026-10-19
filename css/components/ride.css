@@ -1,0 +1,840 @@
+/* =========================================================
+   CODIGO DE HONRA — RIDE
+   Premium / Greaser / Industrial Rustic
+   ========================================================= */
+
+.ride-view.ride-bottom-sheet-overlay,
+.ride-view {
+    --ride-brass: #c49a61;
+    --ride-brass-soft: rgba(196, 154, 97, .13);
+    --ride-green: #55c889;
+    --ride-red: #b85d3b;
+
+    position: fixed !important;
+    inset: auto 0 0 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    z-index: 9000 !important;
+    isolation: isolate;
+}
+
+
+.ride-view.ride-bottom-sheet-overlay.is-mounted .ride-modal__backdrop,
+.ride-view.is-mounted .ride-modal__backdrop {
+    opacity: 1;
+}
+
+.ride-view.ride-bottom-sheet-overlay:not(.is-mounted) .ride-modal__backdrop,
+.ride-view:not(.is-mounted) .ride-modal__backdrop {
+    opacity: 0;
+}
+
+.ride-modal {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 94dvh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.ride-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(5, 6, 5, .68);
+    backdrop-filter: blur(16px) saturate(.82);
+    -webkit-backdrop-filter: blur(16px) saturate(.82);
+    animation: rideBackdropIn .22s ease both;
+}
+
+.ride-shell {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    max-height: 94dvh;
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 28px 28px 0 0;
+    background:
+        radial-gradient(circle at 90% 0%, rgba(196,154,97,.08), transparent 32%),
+        linear-gradient(180deg, rgba(255,255,255,.022), transparent 25%),
+        var(--bg-app, #10110f);
+    box-shadow: 0 -24px 80px rgba(0,0,0,.46), 0 -6px 28px rgba(0,0,0,.24);
+    pointer-events: auto;
+}
+
+.ride-shell::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 42px;
+    height: 4px;
+    transform: translateX(-50%);
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+    z-index: 30;
+    animation: rideHandleIn .30s cubic-bezier(.2,.85,.2,1) both;
+}
+
+@keyframes rideHandleIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes rideBackdropIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.ride-view:not(.is-mounted) .ride-shell {
+    transform: translateY(100%);
+    opacity: .96;
+}
+
+.ride-view.is-mounted .ride-shell {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform .30s cubic-bezier(.2,.85,.2,1), opacity .22s ease;
+}
+
+.ride-header {
+    position: relative;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    min-height: 68px;
+    padding: max(8px, var(--safe-top, 0px)) 16px 8px;
+    border-bottom: 1px solid rgba(255,255,255,.055);
+    background: rgba(16,17,15,.82);
+    backdrop-filter: blur(22px) saturate(1.1);
+    -webkit-backdrop-filter: blur(22px) saturate(1.1);
+}
+
+.ride-header__back {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50%;
+    color: var(--text-primary);
+    background: rgba(255,255,255,.035);
+}
+
+.ride-header__identity {
+    min-width: 0;
+}
+
+.ride-header__eyebrow,
+.ride-flow__heading > span,
+.ride-live-card__eyebrow,
+.ride-vehicle__copy > span {
+    display: block;
+    color: var(--text-tertiary);
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+}
+
+.ride-header h1 {
+    margin: 1px 0 0;
+    font-size: 1.18rem;
+    line-height: 1;
+    letter-spacing: -.02em;
+}
+
+.ride-header__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 0 11px;
+    border: 1px solid rgba(85,200,137,.19);
+    border-radius: 999px;
+    color: var(--ride-green);
+    background: rgba(85,200,137,.055);
+    font-size: .64rem;
+    font-weight: 850;
+    letter-spacing: .09em;
+}
+
+.ride-header__status-dot,
+.ride-live-card__phase-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 4px rgba(85,200,137,.08);
+}
+
+.ride-content {
+    width: min(100%, 720px);
+    margin: 0 auto;
+    padding: 18px 16px 30px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.ride-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-height: 86px;
+    overflow: hidden;
+    padding: 14px;
+    border: 1px solid rgba(196,154,97,.15);
+    border-radius: 21px;
+    background:
+        linear-gradient(135deg, rgba(196,154,97,.105), rgba(255,255,255,.025) 55%, rgba(0,0,0,.12)),
+        rgba(255,255,255,.025);
+    box-shadow: 0 18px 45px rgba(0,0,0,.20);
+}
+
+.ride-hero__grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: .22;
+    background-image: repeating-linear-gradient(125deg, transparent 0 8px, rgba(255,255,255,.025) 9px 10px);
+}
+
+.ride-hero__icon {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(196,154,97,.25);
+    border-radius: 16px;
+    color: var(--ride-brass);
+    background: rgba(196,154,97,.075);
+}
+
+.ride-hero__copy {
+    position: relative;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ride-hero__copy span {
+    color: var(--ride-brass);
+    font-size: .62rem;
+    font-weight: 850;
+    letter-spacing: .12em;
+}
+
+.ride-hero__copy strong {
+    font-size: 1.03rem;
+    line-height: 1.15;
+}
+
+.ride-destination {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.ride-destination > label {
+    color: var(--text-secondary);
+    font-size: .71rem;
+    font-weight: 800;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+}
+
+.ride-destination__input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 58px;
+    padding: 0 14px;
+    border: 1px solid rgba(255,255,255,.095);
+    border-radius: 17px;
+    background: rgba(255,255,255,.045);
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.ride-destination__input-wrap:focus-within {
+    border-color: rgba(196,154,97,.55);
+    background: rgba(196,154,97,.055);
+    box-shadow: 0 0 0 4px rgba(196,154,97,.07);
+}
+
+.ride-destination__icon {
+    display: grid;
+    place-items: center;
+    color: var(--ride-brass);
+}
+
+.ride-destination input {
+    width: 100%;
+    min-width: 0;
+    height: 54px;
+    border: 0;
+    outline: 0;
+    color: var(--text-primary);
+    background: transparent;
+    font: inherit;
+    font-size: .96rem;
+}
+
+.ride-destination input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.ride-destination__locked {
+    display: grid;
+    place-items: center;
+    color: var(--text-tertiary);
+}
+
+.ride-destination__hint {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    color: var(--text-tertiary);
+    font-size: .69rem;
+    line-height: 1.35;
+}
+
+.ride-destination__hint span:first-child {
+    flex: 0 0 auto;
+    color: var(--ride-brass);
+}
+
+.ride-vehicle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 60px;
+    padding: 9px 11px;
+    border: 1px solid rgba(196,154,97,.12);
+    border-radius: 16px;
+    background: rgba(196,154,97,.035);
+}
+
+.ride-vehicle__icon {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    color: var(--ride-brass);
+    background: rgba(196,154,97,.075);
+}
+
+.ride-vehicle__copy {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ride-vehicle__copy strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .83rem;
+}
+
+.ride-vehicle__copy small {
+    color: var(--text-tertiary);
+    font-size: .67rem;
+}
+
+.ride-vehicle__lock {
+    color: var(--text-tertiary);
+}
+
+.ride-live-card {
+    padding: 15px;
+    border: 1px solid rgba(85,200,137,.15);
+    border-radius: 18px;
+    background: linear-gradient(145deg, rgba(85,200,137,.065), rgba(255,255,255,.02));
+}
+
+.ride-live-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.ride-live-card__top strong {
+    display: block;
+    margin-top: 3px;
+    font-size: 1.65rem;
+    letter-spacing: .02em;
+    font-variant-numeric: tabular-nums;
+}
+
+.ride-live-card__phase {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 9px;
+    border-radius: 999px;
+    color: var(--ride-green);
+    background: rgba(85,200,137,.065);
+    font-size: .61rem;
+    font-weight: 850;
+    letter-spacing: .08em;
+}
+
+.ride-live-card__destination {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid rgba(255,255,255,.06);
+    color: var(--text-secondary);
+    font-size: .75rem;
+}
+
+.ride-live-card__destination svg {
+    flex: 0 0 auto;
+    color: var(--ride-brass);
+}
+
+.ride-flow {
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,.065);
+    border-radius: 19px;
+    background: rgba(255,255,255,.022);
+}
+
+.ride-flow__heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.ride-flow__heading small {
+    max-width: 62%;
+    color: var(--text-tertiary);
+    font-size: .66rem;
+    line-height: 1.3;
+    text-align: right;
+}
+
+.ride-flow__track {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ride-flow__line {
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 21px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(196,154,97,.35), rgba(196,154,97,.08));
+}
+
+.ride-step {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 31px 38px 1fr;
+    align-items: center;
+    gap: 8px;
+    min-height: 62px;
+    padding: 6px;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    color: var(--text-secondary);
+    background: transparent;
+    text-align: left;
+    transition: transform .18s ease, border-color .18s ease, background .18s ease, opacity .18s ease;
+}
+
+.ride-step:not(:disabled):active {
+    transform: scale(.985);
+}
+
+.ride-step.is-current {
+    min-height: 70px;
+    border-color: rgba(196,154,97,.46);
+    color: var(--text-primary);
+    background:
+        linear-gradient(135deg, rgba(196,154,97,.12), rgba(196,154,97,.045) 58%, rgba(255,255,255,.018));
+    box-shadow:
+        inset 3px 0 0 rgba(196,154,97,.72),
+        inset 0 1px 0 rgba(255,255,255,.045),
+        0 10px 26px rgba(0,0,0,.18);
+    transform: translateX(2px);
+}
+
+.ride-step.is-current .ride-step__number {
+    color: var(--ride-brass);
+}
+
+.ride-step.is-current .ride-step__copy strong {
+    font-size: .84rem;
+    font-weight: 850;
+}
+
+.ride-step.is-current .ride-step__copy small {
+    color: rgba(255,255,255,.58);
+}
+
+.ride-step.is-current .ride-step__icon {
+    width: 42px;
+    height: 42px;
+    border-color: rgba(196,154,97,.42);
+    color: #e2bd7d;
+    background: radial-gradient(circle at 50% 35%, rgba(196,154,97,.16), rgba(196,154,97,.055));
+    box-shadow: 0 0 22px rgba(196,154,97,.08);
+}
+
+.ride-step.is-done {
+    opacity: .7;
+}
+
+.ride-step:disabled {
+    cursor: default;
+}
+
+.ride-step__number {
+    color: var(--text-tertiary);
+    font-size: .59rem;
+    font-weight: 850;
+    text-align: center;
+    letter-spacing: .04em;
+}
+
+.ride-step__icon {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 12px;
+    color: var(--text-tertiary);
+    background: rgba(255,255,255,.025);
+}
+
+.ride-step.is-current .ride-step__icon {
+    border-color: rgba(196,154,97,.28);
+    color: var(--ride-brass);
+    background: rgba(196,154,97,.09);
+}
+
+.ride-step__copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ride-step__copy strong {
+    font-size: .78rem;
+}
+
+.ride-step__copy small {
+    color: var(--text-tertiary);
+    font-size: .66rem;
+}
+
+.ride-action-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ride-main-action {
+    width: 100%;
+    min-height: 68px;
+    display: grid;
+    grid-template-columns: 43px 1fr 20px;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 13px 8px 9px;
+    border: 1px solid rgba(196,154,97,.30);
+    border-radius: 19px;
+    color: #17130d;
+    background: linear-gradient(145deg, #d2ac73, #a9814e);
+    box-shadow: 0 12px 28px rgba(196,154,97,.12);
+    text-align: left;
+    transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+}
+
+.ride-main-action:not(:disabled):active {
+    transform: scale(.985);
+}
+
+.ride-main-action:disabled {
+    opacity: .42;
+    filter: saturate(.6);
+    box-shadow: none;
+}
+
+.ride-main-action__icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(0,0,0,.11);
+}
+
+.ride-main-action__copy {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ride-main-action__copy small {
+    font-size: .58rem;
+    font-weight: 850;
+    letter-spacing: .09em;
+    opacity: .68;
+}
+
+.ride-main-action__copy strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: .88rem;
+}
+
+.ride-main-action--finish {
+    border-color: rgba(85,200,137,.27);
+    color: #e9fff2;
+    background: linear-gradient(145deg, rgba(85,200,137,.78), rgba(42,130,85,.9));
+    box-shadow: 0 12px 28px rgba(85,200,137,.08);
+}
+
+.ride-action-zone__note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    color: var(--text-tertiary);
+    font-size: .64rem;
+    text-align: center;
+}
+
+.ride-action-zone__note svg {
+    color: var(--ride-brass);
+    flex: 0 0 auto;
+}
+
+.ride-shell.is-busy {
+    pointer-events: none;
+}
+
+.ride-shell.is-busy .ride-main-action {
+    opacity: .58;
+}
+
+@media (max-width: 700px) {
+    .ride-modal {
+        max-height: 96dvh;
+    }
+
+    .ride-shell {
+        width: 100%;
+        max-width: 100%;
+        max-height: 96dvh;
+        border-radius: 24px 24px 0 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ride-modal,
+    .ride-modal__backdrop {
+        animation: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .ride-content {
+        padding-inline: 13px;
+    }
+
+    .ride-flow__heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .ride-flow__heading small {
+        max-width: none;
+        text-align: left;
+    }
+
+    .ride-step {
+        grid-template-columns: 27px 35px 1fr;
+    }
+
+    .ride-step__icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* =========================================================
+   RIDE DENTRO DO SISTEMA GLOBAL DE BOTTOM SHEET
+   ========================================================= */
+
+.bottom-sheet--ride .bottom-sheet__panel {
+    width: min(100%, 720px);
+    max-width: 720px;
+    max-height: 92dvh;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 28px 28px 0 0;
+    background: transparent;
+    box-shadow: 0 -24px 80px rgba(0,0,0,.46);
+}
+
+.bottom-sheet--ride .bottom-sheet__handle {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    z-index: 50;
+    transform: translateX(-50%);
+    margin: 0;
+    background: rgba(255,255,255,.18);
+}
+
+.bottom-sheet--ride .bottom-sheet__header {
+    display: none;
+}
+
+.bottom-sheet--ride .bottom-sheet__body {
+    max-height: 92dvh;
+    padding: 0;
+    overflow: hidden;
+}
+
+.bottom-sheet--ride .ride-view,
+.bottom-sheet--ride .ride-view.ride-bottom-sheet-overlay {
+    position: static !important;
+    inset: auto !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    display: block !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: auto !important;
+    pointer-events: auto !important;
+}
+
+.bottom-sheet--ride .ride-modal {
+    position: static !important;
+    width: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+.bottom-sheet--ride .ride-modal__backdrop {
+    display: none !important;
+}
+
+.bottom-sheet--ride .ride-shell {
+    width: 100%;
+    max-width: none;
+    max-height: 92dvh;
+    min-height: 0;
+    border: 0;
+    border-radius: 28px 28px 0 0;
+    box-shadow: none;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+.bottom-sheet--ride .ride-view:not(.is-mounted) .ride-shell,
+.bottom-sheet--ride .ride-view.is-mounted .ride-shell {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+}
+
+@media (max-width: 700px) {
+    .bottom-sheet--ride .bottom-sheet__panel,
+    .bottom-sheet--ride .ride-shell {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 26px 26px 0 0;
+    }
+}
+
+/* Encerramento alternativo: permite sair da Ride sem completar o fluxo. */
+.ride-secondary-action {
+    width: 100%;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 15px;
+    color: var(--text-secondary);
+    background: rgba(255,255,255,.025);
+    font: inherit;
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    transition: background .16s ease, border-color .16s ease, color .16s ease, transform .16s ease;
+}
+
+.ride-secondary-action:active {
+    transform: scale(.985);
+    background: rgba(255,255,255,.045);
+    border-color: rgba(196,154,97,.22);
+    color: var(--text-primary);
+}
+
+.ride-secondary-action svg {
+    color: var(--ride-red);
+}

@@ -1,0 +1,73 @@
+/* =========================================================
+   MOTOCLUBE
+   Typography
+   ========================================================= */
+
+:root {
+    --font-family:
+        Inter,
+        Roboto,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+html,
+body {
+    font-family: var(--font-family);
+}
+
+body {
+    font-size: 16px;
+    line-height: 1.45;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+h3 {
+    font-size: 21px;
+}
+
+h4 {
+    font-size: 18px;
+}
+
+p {
+    color: var(--text-secondary);
+}
+
+small {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+strong {
+    color: var(--text-primary);
+    font-weight: 650;
+}
+
+::placeholder {
+    color: var(--text-tertiary);
+    opacity: 1;
+}

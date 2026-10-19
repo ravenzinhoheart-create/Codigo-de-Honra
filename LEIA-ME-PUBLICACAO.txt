@@ -1,0 +1,13 @@
+CDHMC PWA — PACOTE COMPLETO PARA GITHUB
+
+Conteúdo: aplicação PWA, CSS, JavaScript, dados estáticos, ícones existentes, ícone maskable de 512x512, manifest e service worker atualizado.
+
+Ícone maskable: assets/icons/app/icon-maskable-512.png
+Manifest: registra o ícone maskable.
+Service worker: cache cdhmc-static-v8 e pré-cache do ícone maskable.
+
+IMPORTANTE ANTES DE PUBLICAR
+- Revise os arquivos para garantir que não há senhas, tokens ou credenciais inseridos diretamente no código.
+- Nunca inclua chaves privadas do Firebase Admin, arquivos de service account ou segredos do Supabase.
+- O ícone maskable foi derivado do ícone de aplicativo existente, com fundo opaco escuro e margem de segurança. Revise visualmente se quiser mudar a identidade visual.
+- Para atualizar o GitHub, preserve a pasta .git do clone e copie apenas o conteúdo deste diretório para dentro dele.
