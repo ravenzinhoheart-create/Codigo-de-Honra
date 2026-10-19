@@ -1,3 +1,4 @@
+
 {
   "id": "./",
   "name": "Código de Honra MC Brasil",
@@ -32,7 +33,7 @@
       "purpose": "any"
     },
     {
-      "src": "./assets/icons/app/icon-maskable-512.png",
+      "src": "./assets/icons/app/icon-512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
