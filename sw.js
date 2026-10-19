@@ -1,5 +1,5 @@
 
-const CACHE_VERSION = 'cdhmc-static-v10';
+const CACHE_VERSION = 'cdhmc-static-v11';
 
 const APP_FILES = [
   './',
